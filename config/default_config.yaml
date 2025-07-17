@@ -1,0 +1,44 @@
+# Default configuration for CCTV Analysis
+
+video:
+  input_formats: [".mp4", ".avi", ".mov", ".mkv"]
+  target_fps: 30
+  target_resolution: [640, 480]
+  skip_frames: 2
+
+motion_detection:
+  algorithm: "MOG2"  # Options: MOG2, KNN, GMM
+  history: 500
+  var_threshold: 50
+  detect_shadows: true
+  min_area: 500
+  morphology_kernel_size: 5
+
+object_detection:
+  model: "yolov8n.pt"
+  confidence_threshold: 0.5
+  nms_threshold: 0.4
+  relevant_classes: ["person", "car", "truck", "bicycle", "motorcycle"]
+  device: "auto"  # auto, cpu, cuda
+
+tracking:
+  iou_threshold: 0.3
+  max_disappeared: 10
+  min_track_length: 5
+
+event_detection:
+  motion_sensitivity: 0.1
+  speed_threshold_multiplier: 3.0
+  loitering_frames: 30
+  loitering_variance_threshold: 100
+  
+scoring:
+  min_event_score: 0.4
+  max_highlights: 15
+  event_type_weights:
+    sudden_movement: 0.7
+    loitering: 0.5
+    zone_violation: 0.9
+    person_detected: 0.6
+    vehicle_detected: 0.4
+
